@@ -10,7 +10,7 @@ Customizations
 - 
  Provide 'shop_worker" role the ability to manage pending payments once they are paid outside website.
 
- NOTICE: that we will only check for payments done by "Manual Gateway" wich will only process ONE item on Cart at once.
+ NOTICE: that we will only check for payments done by "[Manual Gateway](https://github.com/aleph1888/manual_edd_wp_plugin)" wich will only process ONE item on Cart at once.
  
  NOTICE: Campaign_contributor role will be changed to 'shop_worker' when a user creates a campaign
  
