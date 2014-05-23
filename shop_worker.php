@@ -5,11 +5,12 @@
  *
  * Shop_worker EDD->get_payments hook
  *
- * Provide 'shop_worker" role the ability to manage pending payments once they are paid outside website.
- * NOTICE: that we will only check for payments done by "Manual Gateway" wich will only process ONE item on Cart at once.
- * NOTICE: Campaign_contributor role will be changed to 'shop_worker' when a user creates a campaign File
+ * Provide 'shop_worker' role the ability to manage pending payments once they are paid outside website.
  *
- * Getinfo on: http://titanpad.com/fasebetacf
+ * NOTICE:
+ * 1) That we will only check for payments done by "[Manual Gateway](https://github.com/aleph1888/manual_edd_wp_plugin)" wich will only process ONE item on Cart at once.
+ * 2) Campaign_contributor role will be changed to 'shop_worker' when a user creates a campaign.
+ * 3) Payment management will be done on backend wp-admin. While campaign edition can be done in both frontend and backend.
  *
  * @package coopfundify
  * @copyleft Copyleft (l) 2014, Enredaos.net
@@ -17,17 +18,17 @@
  * @since 0
  */
 
+
 /**
  *
- * Hook fundigy insert user to change role
- *
+ * Hook fundify wp_insert_user registration to change user role.
  */
 function coopfy_registration_save( $user_id ) {
 
-        $user = get_user_by("ID", $user_id);
+        $user = get_user_by( "ID", $user_id );
 
         if ( in_array( "campaings_contributor", $user->roles ) )
-                 wp_update_user ( array( 'roles' => array ("shop_worker") );
+                 wp_update_user ( $user_id, array( 'roles' => array ("shop_worker") ) );
 
 }
 add_action( 'user_register', 'coopfy_registration_save', 10, 1 );
@@ -36,6 +37,8 @@ add_action( 'user_register', 'coopfy_registration_save', 10, 1 );
 /**
  *
  * Removes only author on querys fundify restriction, to be called when needed
+ * SEE: appthemer-crowdfunding/includes/roles.php | alt_set_only_author()
+ * THINKING: Maybe we can do the same by removing/adding add_action( 'pre_get_posts', 'alt_set_only_author' );
  *
  */
 function coopfy_set_all_author( $wp_query ) {
@@ -44,6 +47,27 @@ function coopfy_set_all_author( $wp_query ) {
          if ( in_array( "shop_worker", $current_user->roles ) )
                 $wp_query->set( 'author', '' );
 }
+
+
+/**
+ *
+ * Just hook edd_pre_get_payments to remove fundify filter by user hooking.
+ */
+function coopfy_pre_get_payments( $class_payments_query ) {
+
+        // Get current user
+        $user = wp_get_current_user();
+
+        // Gatekeeper: This is for user role shop_worker
+        if ( !  in_array( "shop_worker", $user->roles ) )
+                return  $class_payments_query;
+
+	// remove fundify hook that sets author in every query
+	add_action( 'pre_get_posts', 'coopfy_set_all_author' );
+
+}
+add_action( "edd_pre_get_payments", "coopfy_pre_get_payments" );
+
 
 /**
  *
@@ -55,7 +79,6 @@ function coopfy_set_all_author( $wp_query ) {
  * Retrieve desidered payments and set to class payments attrib.
  * NOTICE: that we will only check for payments done by "Manual Gateway" wich will only process ONE item on Cart at once.
  */
-
 function coopfy_post_get_payments( $class_payments_query ) {
 
 	// Get current user
@@ -65,6 +88,8 @@ function coopfy_post_get_payments( $class_payments_query ) {
         if ( !  in_array( "shop_worker", $user->roles ) )
                 return  $class_payments_query;
 
+	// Remove our nofiltering hook setted in coopfy_pre_get_payments
+	remove_action( 'pre_get_posts', 'coopfy_set_all_author' );
 
 	// Get owned campaigns
         $owned_campaigns = new WP_Query( array(
@@ -73,7 +98,6 @@ function coopfy_post_get_payments( $class_payments_query ) {
                 'post_status'   => array( 'publish' ),
                 'nopaging'      => true
         ) );
-
         $owned_campaigns_ids = array();
         if ( $owned_campaigns->have_posts() ) {
                 while ( $owned_campaigns->have_posts() ) {
@@ -82,53 +106,22 @@ function coopfy_post_get_payments( $class_payments_query ) {
                 }
         }
 
-	add_action( 'pre_get_posts', 'coopfy_set_all_author' );
-
-	$class_payments_query->payments = array();
-
-	$query = array( "query_vars" => array ( "author__in" => NULL), "post_type" => "edd_payment", "post_status" => 'pendent' );
-	$query = new WP_Query( $query );
-
-	if ( $query->have_posts() ) {
-		while ( $query->have_posts() ) {
-				$query->the_post();
-
-				$details = new stdClass;
-
-				$payment_id            = get_post()->ID;
-
-				$details->ID           = $payment_id;
-				$details->date         = get_post()->post_date;
-				$details->post_status  = get_post()->post_status;
-				$details->total        = edd_get_payment_amount( $payment_id );
-				$details->subtotal     = edd_get_payment_subtotal( $payment_id );
-				$details->tax          = edd_get_payment_tax( $payment_id );
-				$details->fees         = edd_get_payment_fees( $payment_id );
-				$details->key          = edd_get_payment_key( $payment_id );
-				$details->gateway      = edd_get_payment_gateway( $payment_id );
-				$details->user_info    = edd_get_payment_meta_user_info( $payment_id );
-				$details->cart_details = edd_get_payment_meta_cart_details( $payment_id, true );
-
-				$class_payments_query->payments[] = apply_filters( 'edd_payment', $details, $payment_id, $this );
-			}
-		}
-
+	// Filter payments by owned list
 	$owned_payments = array();
-	remove_action( 'pre_get_posts', 'coopfy_set_all_author' );
-
 	foreach( $class_payments_query->payments as $payment ) {
-		var_dump("check payment " . $payment->ID); echo "<br>";
+
 		$payment_campaigns = edd_get_payment_meta_cart_details( $payment->ID, false );
-		var_dump($payment_campaigns ); echo "<br>";
-		foreach ( $payment_campaigns as $campaign ) {
-			var_dump("Checking if " . $campaign["id"] . " exists in " ); echo "<br>";
 
-			if ( in_array( $campaign["id"], $owned_campaigns_ids ) ) {
-				var_dump("si entra"); echo "<br>";
-				$owned_payments[] = $payment;
-				continue;
+		$is_gateway = $payment->gateway == "manual_gateway";
+
+		if ( $is_gateway ) {
+			foreach ( $payment_campaigns as $campaign ) {
+				$is_owned = in_array( $campaign["id"], $owned_campaigns_ids );
+				if ( $is_owned ) {
+					$owned_payments[] = $payment;
+					continue;
+				}
 			}
-
 		}
 	}
 
