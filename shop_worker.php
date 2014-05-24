@@ -8,7 +8,8 @@
  * Provide 'shop_worker' role the ability to manage pending payments once they are paid outside website.
  *
  * NOTICE:
- * 1) That we will only check for payments done by "[Manual Gateway](https://github.com/aleph1888/manual_edd_wp_plugin)" wich will only process ONE item on Cart at once.
+ * 1) This we will only check for payments done by "[Manual Gateway](https://github.com/aleph1888/manual_edd_wp_plugin)" wich will only process ONE item on Cart at once.
+ * 1.1) This will only show "pending" payments.
  * 2) Campaign_contributor role will be changed to 'shop_worker' when a user creates a campaign.
  * 3) Payment management will be done on backend wp-admin. While campaign edition can be done in both frontend and backend.
  *
@@ -182,8 +183,9 @@ function coopfy_post_get_payments( $class_payments_query ) {
 		$payment_campaigns = edd_get_payment_meta_cart_details( $payment->ID, false );
 
 		$is_gateway = $payment->gateway == "manual_gateway";
+		$is_pending = $payment->post_status == "pending";
 
-		if ( $is_gateway ) {
+		if ( $is_gateway && $is_pending ) {
 			foreach ( $payment_campaigns as $campaign ) {
 				$is_owned = in_array( $campaign["id"], $owned_campaigns_ids );
 				if ( $is_owned ) {
