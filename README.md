@@ -16,7 +16,7 @@ Customizations
  
  2) Campaign_contributor role will be changed to 'shop_worker' when a user creates a campaign.
  
- 3) Payment management will be done on backend wp-admin. While campaign edition can be done in both frontend and backend.
+ 3) Payment management will be done on backend wp-admin. Still user can see own payments on frontend. While campaign edition can be done in both frontend and backend. 
 
  
  [File](https://github.com/aleph1888/coopfundify/blob/master/shop_worker.php)
