@@ -13,6 +13,7 @@ Customizations
  NOTICE: 
  
  1) That we will only check for payments done by "[Manual Gateway](https://github.com/aleph1888/manual_edd_wp_plugin)" wich will only process ONE item on Cart at once.
+ 1.1) Only "pending" payments will be listed.
  
  2) Campaign_contributor role will be changed to 'shop_worker' when a user creates a campaign.
  
