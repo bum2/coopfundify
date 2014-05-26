@@ -10,7 +10,7 @@
  * NOTICE:
  * 1) This we will only check for payments done by "[Manual Gateway](https://github.com/aleph1888/manual_edd_wp_plugin)" wich will only process ONE item on Cart at once.
  * 1.1) This will only show "pending" payments. REMOVED
- * 2) Campaign_contributor role will be changed to 'shop_worker' when a user creates a campaign.
+ * 2) Campaign_contributor role will be changed to 'shop_worker' hooking wp_insert user.
  * 3) Payment management will be done on backend wp-admin. While campaign edition can be done in both frontend and backend.
  *
  * @package coopfundify
