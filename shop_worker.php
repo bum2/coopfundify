@@ -122,6 +122,7 @@ function coopfy_set_all_author( $wp_query ) {
 /**
  *
  * Just hook edd_pre_get_payments to remove fundify filter by user hooking.
+ * May be this can be optimized by https://github.com/easydigitaldownloads/Easy-Digital-Downloads/blob/master/includes/payments/class-payments-query.php#L412
  */
 function coopfy_pre_get_payments( $class_payments_query ) {
 
