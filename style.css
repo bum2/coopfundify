@@ -1,0 +1,118 @@
+/*
+Theme Name:   Fundify Child
+Theme URI:    http://coopfunding.net
+Description:  Fundify Child arreglat per a Coopfunding
+Author:       bumbum
+Author URI:   http://coopfunding.net
+Template:     fundify
+Version:      1.7.1
+Tags:         white, green, right-sidebar, fixed-width, custom-background, custom-header, theme-options, full-width-template, featured-images, flexible-header, custom-menu, translation-ready
+Text Domain:  fundify-child
+License:      GNU General Public License
+*/
+
+@import url("../fundify/style.css");
+
+/* =Theme customization starts here
+-------------------------------------------------------------- */
+
+hgroup {
+  position: relative;
+  top: -110px;
+}
+.sub-menu {
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+}
+.title {
+  background: url("http://www.coopfunding.net/wp-content/uploads/2014/03/bg_footer_clar.jpg") repeat scroll 0% 0%;
+  height: 140px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+}
+.title.pattern-1 {
+  background: url("http://www.coopfunding.net/wp-content/uploads/2014/03/bg_footer_clar.jpg") repeat scroll 0% 0%;
+  
+}
+.title.pattern-2 {
+  background: url("http://www.coopfunding.net/wp-content/uploads/2014/03/bg_footer_clar.jpg") repeat scroll 0% 0%;
+  
+}
+.title.pattern-3 {
+  background: url("http://www.coopfunding.net/wp-content/uploads/2014/03/bg_footer_clar.jpg") repeat scroll 0% 0%;
+  
+}
+.title.pattern-4 {
+  background: url("http://www.coopfunding.net/wp-content/uploads/2014/03/bg_footer_clar.jpg") repeat scroll 0% 0%;
+  
+}
+.title h1 {
+  padding: 45px 0px 0px;
+}
+.title-two h1 {
+  padding: 35px 0px 0px;
+}
+.site-title span {
+  display: none;
+}
+.site-header #menu {
+  top: 126px; 
+}
+#home-page-featured img {
+  height: 222px;
+  width: 360px;
+  margin: 10px 10px 3px 10px;
+  opacity: 0.8;
+}
+#home-page-featured img:hover {
+  box-shadow: 0px 0px 0px;
+}
+#home-page-featured li {
+  text-align: center;
+}
+#home-page-featured a { 
+  color: aaaaaa;
+}
+#home-page-featured a:hover { 
+  color: fff;
+  text-decoration: none;
+}
+#home-page-featured ul {
+  height: 260px;
+}
+#home-page-featured {
+  height: 260px;
+  /*text-align: center;*/
+  width: 1140px;
+  margin: 0px auto;
+  font-size: 12px;
+  background-color: 222222;
+  padding: 10px;
+}
+#home-page-featured h1 {
+  top: 15%;
+  line-height: 45px;
+  font-size: 25px;
+}
+#header {
+  height: 112px;
+}
+header div #page {
+  height: 42px;
+}
+#menu a:hover {
+  color: 02584c;
+}
+#content .dropdown li a:hover {
+  color: 02584c;
+}
+#footer {
+  padding: 40px 50px;
+  /*background-repeat: repeat;*/
+}
+
+
+.project-details .right-side {
+  background-color: efeeee;
+}
+.project-details .contribute-now {
+  background-color: e9e8e8;
+}
