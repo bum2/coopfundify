@@ -1,5 +1,6 @@
 <?php
-/**
+/**  This file goes inside plugins/easy-digital-downloads/includes/admin/payments  
+ * 
  * Payment History Table Class
  *
  * @package     EDD
