@@ -22,7 +22,7 @@ Customizations
  [File](https://github.com/aleph1888/coopfundify/blob/master/shop_worker.php)
 
 
-Also the tuning of other funcions to meet the requirements of coopfunding.net:
+
 - **campaign_payments_column_adder**
 - 
  To add a 'campaign' column to the admin's Payments History page.
