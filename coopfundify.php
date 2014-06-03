@@ -19,7 +19,9 @@ function coopfy_load_plugin() {
 	include ( __DIR__ . "/shop_worker.php" );
 	
 	include ( __DIR__ . "/campaign_payments_column_adder.php");
-
+	
+	include ( __DIR__ . "/profile_campaigns_link_id.php");
+	
 }
 add_action( 'plugins_loaded', 'coopfy_load_plugin' );
 
