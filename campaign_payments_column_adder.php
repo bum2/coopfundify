@@ -7,17 +7,17 @@
 function coopfy_payments_table_columns($columns) {
 	$columns['campaign'] = __( 'Campaign', 'edd');
 
-	return $columns;
+	return apply_filters( 'edd_payments_table_columns', $columns );
 }
-add_action ('edd_payments_table_columns', 'coopfy_payments_table_columns');
+add_filter ('edd_payments_table_columns', 'coopfy_payments_table_columns');
 
 
 function coopfy_payments_table_sortable_columns($columns) {
 	$columns['campaign'] = array( 'campaign', false );
 	
-	return $columns;
+	return apply_filters( 'edd_payments_table_sortable_columns', $columns );
 }
-add_action ( 'edd_payments_table_sortable_columns', 'coopfy_payments_table_sortable_columns');
+add_filter ( 'edd_payments_table_sortable_columns', 'coopfy_payments_table_sortable_columns');
 
 
 function coopfy_column_campaign ( $value, $payment_id, $column_name ) {
@@ -35,9 +35,9 @@ function coopfy_column_campaign ( $value, $payment_id, $column_name ) {
 		}
 	}
 	
-	return $value;
+	return apply_filters( 'edd_payments_table_column', $value, $payment->ID, $column_name );
 }
 
-add_action ( 'edd_payments_table_column', 'coopfy_column_campaign');
+add_filter ( 'edd_payments_table_column', 'coopfy_column_campaign');
 
 ?>
