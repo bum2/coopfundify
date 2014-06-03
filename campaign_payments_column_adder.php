@@ -2,7 +2,6 @@
 
 /**
  *  functions to override from easy-digital-downloads/includes/admin/payments/class-payments-table.php
- * 
  */
  
 function coopfy_payments_table_columns($columns) {
