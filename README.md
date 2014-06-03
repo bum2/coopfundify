@@ -19,5 +19,15 @@ Customizations
  
  3) Payment management will be done on backend wp-admin. Still user can see own payments on frontend. While campaign edition can be done in both frontend and backend. 
 
- 
  [File](https://github.com/aleph1888/coopfundify/blob/master/shop_worker.php)
+
+
+Also the tuning of other funcions to meet the requirements of coopfunding.net:
+- **campaign_payments_column_adder**
+- 
+ To add a 'campaign' column to the admin's Payments History page.
+
+ NOTICE:
+ 
+ 1) Assuming all user payments Carts have only ONE item (campaign) to pay (contribute).
+ 
