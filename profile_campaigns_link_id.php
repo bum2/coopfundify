@@ -1,5 +1,11 @@
 <?php
 
+/**
+ *  to override a function at appthemer-crowdfunding/includes/shortcode-profile.php
+ *  just to add an id to the 'your-campaigns' h3
+ * 
+ */
+ 
 if ( ! function_exists( 'atcf_shortcode_profile_campaigns' ) ) {
 	function atcf_shortcode_profile_campaigns( $user ) {
 		$campaigns = new WP_Query( array(
