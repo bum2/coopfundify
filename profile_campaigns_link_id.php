@@ -6,7 +6,7 @@
  * 
  */
  
-function coopfy_add_id_to_your-campaigns( $campaign ) {
+function coopfy_add_id_to_your_campaigns( $campaign ) {
 
     $H3withoutID = '<h3 class="atcf-profile-section your-campaigns">';
     $H3withID =  '<h3 class="atcf-profile-section your-campaigns" id="campaigns">';
@@ -15,7 +15,7 @@ function coopfy_add_id_to_your-campaigns( $campaign ) {
     echo $out;
     
 }
-add_action( 'atcf_profile_campaign_before', 'coopfy_add_id_to_your-campaigns');
+add_action( 'atcf_profile_campaign_before', 'coopfy_add_id_to_your_campaigns');
  
 
 ?>
