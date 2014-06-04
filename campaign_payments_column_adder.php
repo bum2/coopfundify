@@ -6,8 +6,6 @@
 
 function coopfy_payments_table_columns($columns) {
 
-	//var_dump($columns);
-
 	$columns['campaign'] =  __( 'Campaign', 'edd');
 	return $columns;
 
