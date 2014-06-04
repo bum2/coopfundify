@@ -25,8 +25,7 @@ add_filter ( 'edd_payments_table_sortable_columns', 'coopfy_payments_table_sorta
 function coopfy_column_campaign ( $value, $payment_id, $column_name ) {
 
 	if( $column_name == 'campaign' ) {
-		$payment = get_post( $payment_id );
-		$cart_items   = edd_get_payment_meta_cart_details( $payment );
+		$cart_items  = edd_get_payment_meta_cart_details( $payment_id );
 
 		if ( $cart_items ) {
 			foreach ( $cart_items as $key => $cart_item ) :
