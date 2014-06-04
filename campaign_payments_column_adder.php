@@ -14,11 +14,13 @@ add_filter ('edd_payments_table_columns', 'coopfy_payments_table_columns');
 
 
 function coopfy_payments_table_sortable_columns($columns) {
+	
 	$columns['campaign'] = array( 'campaign', false );
-
 	return $columns;
+	
 }
 add_filter ( 'edd_payments_table_sortable_columns', 'coopfy_payments_table_sortable_columns');
+
 
 function coopfy_column_campaign ( $value, $payment_id, $column_name ) {
 
@@ -36,7 +38,7 @@ function coopfy_column_campaign ( $value, $payment_id, $column_name ) {
 	}
 
 	return $value;
+	
 }
 add_filter ( 'edd_payments_table_column', 'coopfy_column_campaign', 1, 3  );
-
 ?>
