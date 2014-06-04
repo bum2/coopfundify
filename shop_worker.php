@@ -82,6 +82,7 @@ function coopfy_add_caps() {
 
 	}
 }
+coopfy_add_caps();
 register_activation_hook( __FILE__, 'coopfy_add_caps' );
 
 
