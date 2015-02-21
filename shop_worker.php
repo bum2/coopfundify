@@ -82,6 +82,7 @@ function coopfy_add_caps() {
 
 	}
 }
+coopfy_add_caps();
 register_activation_hook( __FILE__, 'coopfy_add_caps' );
 
 
@@ -101,7 +102,7 @@ function coopfy_registration_save( $user_id ) {
 	}
 
 }
-add_action( 'user_register', 'coopfy_registration_save', 10, 1 );
+//add_action( 'user_register', 'coopfy_registration_save', 10, 1 );
 
 
 /**
