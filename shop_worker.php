@@ -55,6 +55,8 @@ add_action( 'admin_init', 'coopfy_prevent_admin_access' );
 function coopfy_add_caps() {
 
 	global $wp_roles;
+		
+	if ( !isset($wp_roles) ) return;
 
 	if ( class_exists('WP_Roles') ) {
 	        if ( ! isset( $wp_roles ) )
@@ -62,23 +64,92 @@ function coopfy_add_caps() {
 	}
 
 	if ( is_object( $wp_roles ) ) {
+		$prev_role_caps = $wp_roles->get_role('shop_worker');
+		//foreach ( $prev_role_caps->capabilities as $key=>$value )
+                //        $wp_roles->remove_cap( 'shop_worker', $key );
+		
+		$wp_roles->remove_role('shop_worker');
+		$wp_roles->add_role('shop_worker', __('Shop Worker','coopfundify') );
 
 		// Clone campaign_contributor caps
-	        $fundify_caps = $wp_roles->get_role('campaign_contributor');
+	        $fundify_caps = $wp_roles->get_role('shop_manager');//campaign_contributor');
 		foreach ( $fundify_caps->capabilities as $key=>$value )
 	        	$wp_roles->add_cap( 'shop_worker', $key );
 
 		// add specific payments caps
-        	$wp_roles->add_cap( 'shop_worker', 'edit_shop_payments' );
+        	/*$wp_roles->add_cap( 'shop_worker', 'edit_shop_payments' );
                 $wp_roles->add_cap( 'shop_worker', 'edit_others_shop_payments' );
+		$wp_roles->add_cap( 'shop_worker', 'view_shop_payment_stats' );
+		$wp_roles->add_cap( 'shop_worker', 'view_shop_sensitive_data' );
+		$wp_roles->add_cap( 'shop_worker', 'read_private_shop_payments' );
+		$wp_roles->add_cap( 'shop_worker', 'read_shop_payment' );
+		$wp_roles->add_cap( 'shop_worker', 'view_product_stats' );
+		$wp_roles->add_cap( 'shop_worker', 'view_shop_discount_stats' );
+		$wp_roles->add_cap( 'shop_worker', 'view_shop_reports' );
+		$wp_roles->add_cap( 'shop_worker', 'read_shop_discount' );
+		$wp_roles->add_cap( 'shop_worker', 'read_private_shop_discounts' );
+		$wp_roles->add_cap( 'shop_worker', 'read_product' );*/
+		//$wp_roles->add_cap( 'shop_worker', 'wpml_manage_navigation' );
+		//$wp_roles->add_cap( 'shop_worker', 'wpml_manage_translation_management' );
 
 		// remove some  no allowed caps
+		$wp_roles->remove_cap( 'shop_worker', 'edit_others_products' );
+		$wp_roles->remove_cap( 'shop_worker', 'manage_shop_settings' );
+		
+		$wp_roles->remove_cap( 'shop_worker', 'edit_posts' );
+		//$wp_roles->remove_cap( 'shop_worker', 'edit_others_posts');
+		$wp_roles->remove_cap( 'shop_worker', 'publish_posts');
+		$wp_roles->remove_cap( 'shop_worker', 'edit_published_posts');
+		$wp_roles->remove_cap( 'shop_worker', 'edit_private_posts');
+		$wp_roles->remove_cap( 'shop_worker', 'delete_posts');
+		$wp_roles->remove_cap( 'shop_worker', 'delete_published_posts');
+		$wp_roles->remove_cap( 'shop_worker', 'delete_private_posts');
+
+		$wp_roles->remove_cap( 'shop_worker', 'edit_pages' );
+		$wp_roles->remove_cap( 'shop_worker', 'publish_pages');
+		$wp_roles->remove_cap( 'shop_worker', 'edit_published_pages');
+		$wp_roles->remove_cap( 'shop_worker', 'edit_private_pages');
+
+		$wp_roles->remove_cap( 'shop_worker', 'manage_categories');
+		$wp_roles->remove_cap( 'shop_worker', 'export');
+		$wp_roles->remove_cap( 'shop_worker', 'import');
+		$wp_roles->remove_cap( 'shop_worker', 'manage_links');
+		$wp_roles->remove_cap( 'shop_worker', 'view_shop_reports');
+		$wp_roles->remove_cap( 'shop_worker', 'edit_product_terms');
+		$wp_roles->remove_cap( 'shop_worker', 'delete_product_terms');
+		$wp_roles->remove_cap( 'shop_worker', 'manage_product_terms');
+		$wp_roles->remove_cap( 'shop_worker', 'unfiltered_html');
+
+		$wp_roles->remove_cap( 'shop_worker', 'assign_shop_discounts_terms');
+		$wp_roles->remove_cap( 'shop_worker', 'delete_others_shop_discounts');
+		$wp_roles->remove_cap( 'shop_worker', 'delete_private_shop_discounts');
+		$wp_roles->remove_cap( 'shop_worker', 'delete_published_shop_discounts');
+		$wp_roles->remove_cap( 'shop_worker', 'delete_shop_discount');
+		$wp_roles->remove_cap( 'shop_worker', 'delete_shop_discounts');
+		$wp_roles->remove_cap( 'shop_worker', 'delete_shop_discount_terms');
+		$wp_roles->remove_cap( 'shop_worker', 'edit_others_shop_discounts');
+		$wp_roles->remove_cap( 'shop_worker', 'edit_private_shop_discounts');
+		$wp_roles->remove_cap( 'shop_worker', 'edit_published_shop_discounts');
+		$wp_roles->remove_cap( 'shop_worker', 'edit_shop_discounts');
+		$wp_roles->remove_cap( 'shop_worker', 'edit_shop_discount');
+		$wp_roles->remove_cap( 'shop_worker', 'edit_shop_discount_terms');
+		$wp_roles->remove_cap( 'shop_worker', 'manage_shop_discounts');
+		$wp_roles->remove_cap( 'shop_worker', 'manage_shop_discount_terms');
+		$wp_roles->remove_cap( 'shop_worker', 'publish_shop_discounts');
+		$wp_roles->remove_cap( 'shop_worker', 'read_private_shop_discounts');
+		$wp_roles->remove_cap( 'shop_worker', 'read_shop_discount');
+
 		$wp_roles->remove_cap( 'shop_worker', 'manage_options' );
                 $wp_roles->remove_cap( 'shop_worker', 'publish_posts' );
                 $wp_roles->remove_cap( 'shop_worker', 'delete_published_posts' );
-                $wp_roles->remove_cap( 'shop_worker', 'edit_posts' );
+                //$wp_roles->remove_cap( 'shop_worker', 'edit_posts' );
                 $wp_roles->remove_cap( 'shop_worker', 'publish_products' );
-                $wp_roles->remove_cap( 'shop_worker', 'upload_files' );
+		$wp_roles->remove_cap( 'shop_worker', 'delete_others_products');
+		$wp_roles->remove_cap( 'shop_worker', 'delete_published_products');
+		$wp_roles->remove_cap( 'shop_worker', 'delete_private_products');
+		$wp_roles->remove_cap( 'shop_worker', 'read_private_products');
+                //$wp_roles->remove_cap( 'shop_worker', 'upload_files' );
+		//$wp_roles->remove_cap( 'shop_worker', '');
 
 	}
 }
@@ -117,8 +188,22 @@ function coopfy_set_all_author( $wp_query ) {
 
         if ( in_array( "shop_worker", $current_user->roles ) )
                 $wp_query->set( 'author', '' );
+
 }
 
+function coopfy_parse_query( $wp_query ){
+	if( $wp_query->query['post_type'][0] == 'edd_payment'){ //'download'){
+		echo '<br>WPQUERY: ';
+		print_r($wp_query);
+	}
+}
+//add_action( 'parse_query', 'coopfy_parse_query' );
+function coopfy_request( $request ){
+	echo '<br>REQUEST: ';
+	print_r( $request );
+	return $request;
+}
+//add_action( 'request', 'coopfy_request');
 
 /**
  *
@@ -133,10 +218,29 @@ function coopfy_pre_get_payments( $class_payments_query ) {
         // Gatekeeper: This is for user role shop_worker
         if ( !  in_array( "shop_worker", $user->roles ) )
                 return  $class_payments_query;
-
+	
+	// Get owned campaigns
+        /*$owned_campaigns = new WP_Query( array(
+                'post_type'     => 'download',
+                'author'        => $user->ID,
+                'post_status'   => array( 'publish' ),
+                'nopaging'      => true
+        ) );
+        $owned_campaigns_ids = array();
+        if ( $owned_campaigns->have_posts() ) {
+                while ( $owned_campaigns->have_posts() ) {
+                        $owned_campaigns->the_post();
+                        array_push( $owned_campaigns_ids, get_post()->ID );
+                }
+        }*/
+	//$class_payments_query->args['download'] = "'".$owned_campaigns_ids[0].','.$owned_campaigns_ids[1]."'";
+	$class_payments_query->args['number'] = 10000;
+	//echo '<br>PRE_QUERY: ';
+        //print_r($class_payments_query);
+	
 	// remove fundify hook that sets author in every query
 	add_action( 'pre_get_posts', 'coopfy_set_all_author' );
-
+	//add_action( 'parse_query', 'coopfy_parse_query' );
 }
 add_action( "edd_pre_get_payments", "coopfy_pre_get_payments" );
 
@@ -177,6 +281,14 @@ function coopfy_post_get_payments( $class_payments_query ) {
                         array_push( $owned_campaigns_ids, get_post()->ID );
                 }
         }
+        
+        // Remove our nofiltering hook setted in coopfy_pre_get_payments
+        //remove_action( 'pre_get_posts', 'coopfy_set_all_author' );
+        //echo 'USERID: '.$user->ID;
+	//echo '<br>IDS: '.count($owned_campaigns_ids);
+        //print_r($owned_campaigns->query_vars);
+	//echo '<br>QUERY: '.count($class_payments_query->payments);
+        //print_r($class_payments_query->payments);
 
 	// Filter payments by owned list
 	$owned_payments = array();
@@ -185,7 +297,7 @@ function coopfy_post_get_payments( $class_payments_query ) {
 		$payment_campaigns = edd_get_payment_meta_cart_details( $payment->ID, false );
 
 		$is_gateway = $payment->gateway == "manual_gateway";
-		$is_pending = TRUE; // Removed: $payment->post_status == "pending";
+		$is_pending = true; // Removed: $payment->post_status == "pending";
 
 		if ( $is_gateway && $is_pending ) {
 			foreach ( $payment_campaigns as $campaign ) {
@@ -200,5 +312,6 @@ function coopfy_post_get_payments( $class_payments_query ) {
 
 	// override class payments
 	$class_payments_query->payments = $owned_payments;
+	//print_r( $class_payments_query->payments );
 }
 add_action( "edd_post_get_payments", "coopfy_post_get_payments" );
