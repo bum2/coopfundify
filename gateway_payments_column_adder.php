@@ -10,7 +10,7 @@ add_filter('edd_payments_table_columns', 'payments_table_gateway_column');
 
 
 function coopfundify_payments_table_views ( $views ){
-    if( ! current_user_can( 'manage_shop_settings' ) ) {
+    if( !current_user_can( 'submit_campaigns' ) && !current_user_can( 'manage_shop_settings' ) ) {
         //$views['gateways'] = '</span></li></ul><br><br><br>';
         return $views; //wp_die( __( 'You do not have permission to do shop upgrades', 'edd' ), __( 'Error', 'edd' ), array( 'response' => 403 ) );
     } else {
