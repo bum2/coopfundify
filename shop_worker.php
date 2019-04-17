@@ -100,7 +100,6 @@ function coopfy_add_caps() {
 		$wp_roles->remove_cap( 'shop_worker', 'manage_shop_settings' );
 		
 		$wp_roles->remove_cap( 'shop_worker', 'edit_posts' );
-		//$wp_roles->remove_cap( 'shop_worker', 'edit_others_posts');
 		$wp_roles->remove_cap( 'shop_worker', 'publish_posts');
 		$wp_roles->remove_cap( 'shop_worker', 'edit_published_posts');
 		$wp_roles->remove_cap( 'shop_worker', 'edit_private_posts');
@@ -156,7 +155,7 @@ function coopfy_add_caps() {
                 $wp_roles->remove_cap( 'shop_worker', 'publish_posts' );
                 $wp_roles->remove_cap( 'shop_worker', 'delete_published_posts' );
 
-                //$wp_roles->remove_cap( 'shop_worker', 'edit_posts' );
+                $wp_roles->remove_cap( 'shop_worker', 'edit_products' );
                 $wp_roles->remove_cap( 'shop_worker', 'publish_products' );
 		$wp_roles->remove_cap( 'shop_worker', 'delete_others_products');
 	        $wp_roles->remove_cap( 'shop_worker', 'edit_others_products');	
@@ -165,6 +164,9 @@ function coopfy_add_caps() {
 		$wp_roles->remove_cap( 'shop_worker', 'read_private_products');
                 //$wp_roles->remove_cap( 'shop_worker', 'upload_files' );
 		//$wp_roles->remove_cap( 'shop_worker', '
+
+		$wp_roles->remove_cap( 'shop_worker', 'edit_others_shop_payments');
+		$wp_roles->remove_cap( 'shop_worker', 'delete_others_shop_payments');
 
 		$wp_roles->remove_cap( 'shop_worker', 'edit_others_attachments' );
 		$wp_roles->remove_cap( 'shop_worker', 'delete_others_attachments' );
