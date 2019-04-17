@@ -159,6 +159,7 @@ function coopfy_add_caps() {
                 //$wp_roles->remove_cap( 'shop_worker', 'edit_posts' );
                 $wp_roles->remove_cap( 'shop_worker', 'publish_products' );
 		$wp_roles->remove_cap( 'shop_worker', 'delete_others_products');
+	        $wp_roles->remove_cap( 'shop_worker', 'edit_others_products');	
 		$wp_roles->remove_cap( 'shop_worker', 'delete_published_products');
 		$wp_roles->remove_cap( 'shop_worker', 'delete_private_products');
 		$wp_roles->remove_cap( 'shop_worker', 'read_private_products');
